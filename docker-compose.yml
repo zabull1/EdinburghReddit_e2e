@@ -6,14 +6,16 @@ x-airflow-common:
     context: .
     dockerfile: Dockerfile
   image: custom-airflow:2.7.1-python3.9
-  environment:
-    AIRFLOW__CORE__EXECUTOR: CeleryExecutor
-    AIRFLOW__CELERY__BROKER_URL: edis://redis:6379/0
-    AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://postgres:postgres@postgres:5432/airflow_reddit
-    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://postgres:postgres@postgres:5432/airflow_reddit
-    AIRFLOW__CORE__FERNET_KEY: 46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho=
-    AIRFLOW__CORE__LOGGING_LEVEL: INFO
-    AIRFLOW__CORE__LOAD_EXAMPLES: False
+  env_file:
+    - airflow.env
+  # environment:
+  #   AIRFLOW__CORE__EXECUTOR: CeleryExecutor
+  #   AIRFLOW__CELERY__BROKER_URL: edis://redis:6379/0
+  #   AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://postgres:postgres@postgres:5432/airflow_reddit
+  #   AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://postgres:postgres@postgres:5432/airflow_reddit
+  #   AIRFLOW__CORE__FERNET_KEY: 46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho=
+  #   AIRFLOW__CORE__LOGGING: INFO
+  #   AIRFLOW__CORE__LOAD_EXAMPLES: False
   volumes:
     - ./config:/opt/airflow/config
     - ./dags:/opt/airflow/dags
@@ -24,7 +26,7 @@ x-airflow-common:
     - ./plugins:/opt/airflow/plugins
     - ./tests:/opt/airflow/tests
     - ./utils:/opt/airflow/utils
-   # - ./airflow.cfg:/opt/airflow/airflow.cfg
+    # - ./airflow.cfg:/opt/airflow/airflow.cfg
     - ./requirements.txt:/opt/airflow/requirements.txt
   depends_on:
     - postgres
@@ -49,7 +51,7 @@ services:
   airflow-init:
     <<: *airflow-common
     command: >
-      bash -c "pip install -r /opt/airflow/requirements.txt && airflow db init && airflow db upgrade && airflow users create --username admin2 --firstname admin --lastname admin --role Admin --email airflow@airflow.com --password admin"
+      bash -c "pip install -r /opt/airflow/requirements.txt && airflow db init && airflow db upgrade && airflow migrate  && airflow users create --username admin --firstname admin --lastname admin --role Admin --email airflow@airflow.com --password admin"
     restart: "no"
 
   airflow-webserver:
