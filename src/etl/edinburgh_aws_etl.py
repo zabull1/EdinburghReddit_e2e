@@ -48,7 +48,7 @@ def load_to_s3_bucket(
 ) -> None:
     """loading posts data to s3 bucket"""
     try:
-        s3_key_name = f"{bucket}/raw/{s3_file_name}"
+        s3_key_name = f"raw/{s3_file_name}"
         s3.upload_file(path, bucket, s3_key_name)
         logging.info("Uploaded %s to s3 bucket %s", s3_key_name, bucket)
 

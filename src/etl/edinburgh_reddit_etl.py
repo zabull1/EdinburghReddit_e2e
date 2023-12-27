@@ -65,3 +65,4 @@ def transform_posts(post_df: pd.DataFrame) -> pd.DataFrame:
 def save_posts_to_parquet(data: pd.DataFrame, path: str) -> None:
     """save posts data to parquet"""
     data.to_parquet(path, engine= 'pyarrow', index=False)
+    return path

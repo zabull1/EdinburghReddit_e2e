@@ -16,7 +16,7 @@ from src.etl.edinburgh_aws_etl import (
     load_to_s3_bucket,
 )
 
-from src.utils.constants import CLIENT_ID, SECRET, BUCKET_NAME, OUTPUT_PATH
+from src.utils.constants import CLIENT_ID, SECRET, BUCKET_NAME, OUTPUT_PATH, AWS_REGION
 
 
 def reddit_pipeline(
@@ -40,8 +40,17 @@ def reddit_pipeline(
     path = os.path.join(os.path.dirname("__file__"), f"..{OUTPUT_PATH}")
     file_path = f"{path}/{file_name}.parquet"
     save_posts_to_parquet(posts, file_path)
+    return file_path
 
-def aws_pipeline() -> None:
-    """ aws pipeline"""
 
-    return
+def aws_pipeline(path) -> None:
+    """aws pipeline"""
+
+    # connect to s3
+    s3 = connect_s3()
+
+    check_and_create_bucket(s3, BUCKET_NAME, AWS_REGION)
+
+    s3_file_name = path.split("/")[-1]
+
+    load_to_s3_bucket(s3, path, BUCKET_NAME, s3_file_name)
