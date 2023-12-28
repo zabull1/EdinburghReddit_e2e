@@ -37,13 +37,14 @@ def reddit_pipeline(
     logging.info(posts.head(10))
 
     # load to s3
-    path = os.path.join(os.path.dirname("__file__"), f"..{OUTPUT_PATH}")
+    # path = os.path.join(os.path.dirname("__file__"), f"..{OUTPUT_PATH}") #local directory
+    path = OUTPUT_PATH
     file_path = f"{path}/{file_name}.parquet"
     save_posts_to_parquet(posts, file_path)
     return file_path
 
 
-def aws_pipeline(path) -> None:
+def aws_pipeline(ti) -> None:
     """aws pipeline"""
 
     # connect to s3
@@ -51,6 +52,8 @@ def aws_pipeline(path) -> None:
 
     check_and_create_bucket(s3, BUCKET_NAME, AWS_REGION)
 
+    path = ti.xcom_pull(task_ids="reddit_posts_extraction", key="return_value")
+    print(path)
     s3_file_name = path.split("/")[-1]
 
     load_to_s3_bucket(s3, path, BUCKET_NAME, s3_file_name)

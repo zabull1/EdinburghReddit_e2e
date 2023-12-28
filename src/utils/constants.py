@@ -1,24 +1,31 @@
 import configparser
-import os
+import os, sys
 
 parser = configparser.ConfigParser()
-path = os.path.join(os.path.dirname("__file__"), "../config/config.conf")
-parser.read(path)
 
+parser.read(os.path.join(os.path.dirname(__file__), "../../config/config.conf"))
 
-# Reddit api
-CLIENT_ID = parser.get("reddit_api_keys", "client_id")
-SECRET = parser.get("reddit_api_keys", "secret_key")
+# CONFIG_FILE_PATH = r"/opt/airflow/config/config.conf"
+# parser.read(CONFIG_FILE_PATH)
 
-# aws
-AWS_ACCESS_KEY = parser.get("aws", "AWS_ACCESS_KEY")
-AWS_SECRET_ACCESS_KEY = parser.get("aws", "AWS_SECRET_ACCESS_KEY")
-AWS_REGION = parser.get("aws", "AWS_REGION")
-BUCKET_NAME = parser.get("aws", "BUCKET_NAME")
+try:
+    # Reddit api
+    CLIENT_ID = parser.get("reddit_api_keys", "client_id")
+    SECRET = parser.get("reddit_api_keys", "secret_key")
 
-# path
-# INPUT_PATH = parser.get("file_paths", "input_path")
-OUTPUT_PATH = parser.get("file_paths", "output_path")
+    # aws
+    AWS_ACCESS_KEY = parser.get("aws", "AWS_ACCESS_KEY")
+    AWS_SECRET_ACCESS_KEY = parser.get("aws", "AWS_SECRET_ACCESS_KEY")
+    AWS_REGION = parser.get("aws", "AWS_REGION")
+    BUCKET_NAME = parser.get("aws", "BUCKET_NAME")
+
+    # path
+    # INPUT_PATH = parser.get("file_paths", "input_path")
+    OUTPUT_PATH = parser.get("file_paths", "output_path")
+
+except configparser.NoOptionError:
+    print("could not read configuration file")
+    sys.exit(1)
 
 
 POST_FIELDS = (
