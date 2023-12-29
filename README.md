@@ -8,7 +8,7 @@ This project offers a data pipeline solution that enables the extraction, transf
 
     - [Overview](#Overview)
     - [Architecture](#architecture)
-    - [ Technologies](#technologies)
+    - [Technologies](#technologies)
     - Prerequisite
 
 ## Overview
