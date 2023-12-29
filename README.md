@@ -6,10 +6,10 @@ This project offers a data pipeline solution that enables the extraction, transf
 
 ## Table of Content
 
-    - [Overview](#Overview)
-    - [Architecture](#architecture)
-    - [Technologies](#technologies)
-    - Prerequisite
+[Overview](#Overview)
+[Architecture](#architecture)
+[Technologies](#technologies)
+Prerequisite
 
 ## Overview
 
