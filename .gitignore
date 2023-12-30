@@ -5,7 +5,6 @@ logs
 __pycache__
 *.ipynb
 .vscode
-/iaas
-iaas
+.README.md
 *.parquet
 *.csv
