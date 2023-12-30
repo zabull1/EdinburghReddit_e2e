@@ -1,0 +1,13 @@
+[reddit_api_keys]
+secret_key = [SECRET KEY HERE]
+client_id = [CLIENT ID HERE]
+
+[aws]
+AWS_ACCESS_KEY=[AWS_ACCESS_KEY]
+AWS_SECRET_ACCESS_KEY=[AWS_SECRET_ACCESS_KEY]
+AWS_REGION=[AWS_REGION]
+BUCKET_NAME=[BUCKET_NAME]
+
+[file_paths]
+input_path = /opt/airflow/data/raw
+output_path = /opt/airflow/data/processed

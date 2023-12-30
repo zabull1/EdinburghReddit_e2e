@@ -114,7 +114,7 @@ project-root
 1. Clone the repository.
 
    ```bash
-    git clone https://github.com/airscholar/RedditDataEngineering.git
+    git clone https://github.com/zabull1/EdinburghReddit_e2e.git
    ```
 
 2. Create a virtual environment.
